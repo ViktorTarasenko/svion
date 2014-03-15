@@ -30,7 +30,7 @@ public class GameInitializer extends AsyncTask {
         HttpParams params = httpclient.getParams();
         params.setParameter("http.protocol.handle-redirects",false);
         httpclient.setParams(params);
-        HttpGet authorizeRequest = new HttpGet("http://192.168.56.1:8080/svion/hello");
+        HttpGet authorizeRequest = new HttpGet(myActivity.getResources().getString(R.string.server));
         HttpResponse response = httpclient.execute(authorizeRequest);
         response.getEntity().consumeContent();
         if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
