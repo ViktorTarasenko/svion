@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">client</string>
+    <string name="offline">You are not online</string>
+    <string name="pick_account">You must pick account to continue</string>
 </resources>
