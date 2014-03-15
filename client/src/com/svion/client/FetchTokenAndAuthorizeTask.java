@@ -62,7 +62,7 @@ public class FetchTokenAndAuthorizeTask extends AsyncTask
             HttpParams httpParams = httpclient.getParams();
 
             httpParams.setParameter("http.protocol.handle-redirects",false);
-            HttpGet authorizeRequest = new HttpGet("http://192.168.56.1:8080/svion/authorize/google?token="+ URLEncoder.encode(token, "UTF-8"));
+            HttpGet authorizeRequest = new HttpGet(myActivity.getResources().getString(R.string.server)+"/authorize/google?token="+ URLEncoder.encode(token, "UTF-8"));
             authorizeRequest.setParams(httpParams);
             final HttpResponse response = httpclient.execute(authorizeRequest);
             response.getEntity().consumeContent();

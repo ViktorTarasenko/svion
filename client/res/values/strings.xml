@@ -3,4 +3,5 @@
     <string name="app_name">client</string>
     <string name="offline">You are not online</string>
     <string name="pick_account">You must pick account to continue</string>
+    <string name="server">http://192.168.56.1:8080/svion</string>
 </resources>
