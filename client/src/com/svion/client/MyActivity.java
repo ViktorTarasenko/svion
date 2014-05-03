@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -26,13 +27,12 @@ public class MyActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        Button playButton = (Button) findViewById(R.id.button);
-        playButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new GameInitializer(MyActivity.this).execute();
-            }
-        });
+    }
+    @Override
+    public void onDestroy() {
+        super.onStop();
+        Websockethandler.closeWebsocket();
+        Log.d("myActivity","closing websocket");
     }
     public void askUserAccountAndAuthorize() {
         String[] accountTypes = new String[]{"com.google"};
@@ -99,6 +99,32 @@ public class MyActivity extends Activity {
                 }
             }
         });
+    }
+
+    public void menu_search_game_click(View v){
+            //переходим с первой на вторую активность
+           // Intent intent = new Intent(this, SearchGame.class);
+           // startActivity(intent);
+            //finish();
+        new GameInitializer(MyActivity.this).execute();
+    }
+
+    public void menu_settings_click(View v){
+        //переходим с первой на вторую активность
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
+        //finish();
+    }
+    public void menu_help_click(View v){
+        //переходим с первой на вторую активность
+        Intent intent = new Intent(this, HelpActivity.class);
+        startActivity(intent);
+        //finish();
+    }
+
+    public void menu_exit_click(View v){
+        moveTaskToBack(true);
+        super.onBackPressed();
     }
 
 }

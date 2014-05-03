@@ -1,19 +1,15 @@
 package com.svion.client;
-
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.view.View;
 import android.widget.Toast;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.protocol.ClientContext;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.HttpParams;
-import org.apache.http.protocol.BasicHttpContext;
-import org.apache.http.protocol.HttpContext;
+
+
 
 import java.io.IOException;
 
@@ -26,7 +22,7 @@ public class GameInitializer extends AsyncTask {
     }
     private MyActivity myActivity;
     private boolean isAuthorized() throws IOException {
-        DefaultHttpClient httpclient = CookieStoreHandler.getInstance().getHttpClient();
+        DefaultHttpClient httpclient = HttpClientHandler.getInstance().getHttpClient();
         HttpParams params = httpclient.getParams();
         params.setParameter("http.protocol.handle-redirects",false);
         httpclient.setParams(params);
@@ -54,7 +50,7 @@ public class GameInitializer extends AsyncTask {
                         Toast.makeText(myActivity, "successfully logged in", Toast.LENGTH_SHORT).show();
                     }
                 });
-                Intent startGameActivityIntent = new Intent(myActivity, GameActivity.class);
+                Intent startGameActivityIntent = new Intent(myActivity, SearchGame.class);
                 myActivity.startActivity(startGameActivityIntent);
             }
             else {

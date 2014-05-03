@@ -6,6 +6,7 @@
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc 
 		http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
 		http://www.springframework.org/schema/beans 
@@ -17,10 +18,17 @@
        http://www.springframework.org/schema/aop 
        http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
        http://www.springframework.org/schema/security 
-       http://www.springframework.org/schema/security/spring-security-3.1.xsd"> 
+       http://www.springframework.org/schema/security/spring-security-3.1.xsd
+        http://www.springframework.org/schema/websocket
+        http://www.springframework.org/schema/websocket/spring-websocket-4.0.xsd"> 
        
       <context:component-scan base-package="omsu.svion.web" />
      <mvc:annotation-driven />
+      <websocket:handlers>
+        <websocket:mapping path="/game" handler="gameServlet"/>
+    </websocket:handlers>
+
+    <bean id="gameServlet" class="omsu.svion.server.websocket.GameServlet"/>
 
 
 </beans>

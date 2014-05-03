@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/b">
+
+
+    <ImageView
+            android:layout_width="450sp"
+            android:layout_height="250sp"
+            android:src="@drawable/ronaldinho"
+            android:background="@drawable/picture_shape"
+            android:id="@+id/imageView"/>
+    <TableLayout
+            android:layout_width="fill_parent"
+            android:layout_height="104dp" android:layout_marginLeft="20dp" android:layout_marginTop="255dp">
+        <TableRow android:layout_marginTop="5sp">
+        <TextView style="@style/CostFont" android:background="@drawable/cell_shape" android:padding="8dp"
+                  android:id="@+id/answer1"
+                  android:layout_width="200sp"
+                  android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium"
+                  android:text="Rivaldo"/>
+        <TextView style="@style/CostFont" android:background="@drawable/cell_shape" android:padding="8dp"
+                  android:id="@+id/answer2"
+                  android:layout_width="200sp"
+                  android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium"
+                  android:text="Ronaldo" android:layout_marginLeft="10dp"/>
+        </TableRow>
+
+        <TableRow android:layout_marginTop="5sp">
+        <TextView style="@style/CostFont" android:background="@drawable/cell_shape" android:padding="8dp"
+                  android:id="@+id/answer3"
+                  android:layout_width="200sp"
+                  android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium"
+                  android:text="Ronaldinho"/>
+        <TextView style="@style/CostFont" android:background="@drawable/cell_shape" android:padding="8dp"
+                  android:id="@+id/answer4"
+                  android:layout_width="200sp"
+                  android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium"
+                  android:text="Romario" android:layout_marginLeft="10dp"/>
+        </TableRow>
+    </TableLayout>
+</FrameLayout>

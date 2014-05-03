@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android"
+        android:background="@drawable/b">
+
+    <TextView
+            style="@style/AboutFont"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/help_about"
+            android:id="@+id/textView" android:layout_gravity="center_horizontal"/>
+    <TextView
+            android:id="@+id/help_back"
+            style="@style/MenuFont"
+            android:text="@string/help_back"
+            android:onClick="help_back_click"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"/>
+</LinearLayout>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android"
+        android:background="@drawable/b">
+    <TextView style="@style/AboutFont" android:layout_width="wrap_content" android:layout_height="wrap_content"
+              android:textAppearance="?android:attr/textAppearanceMedium" android:text="Не удалось найти игроков"
+              android:id="@+id/textView"
+              android:layout_centerHorizontal="true"
+              android:layout_marginTop="110dp"
+              android:layout_gravity="center_horizontal"/>
+    <TextView style="@style/MenuFont" android:layout_width="wrap_content" android:layout_height="wrap_content"
+              android:textAppearance="?android:attr/textAppearanceMedium" android:text="В главное меню"
+              android:id="@+id/textView2" android:layout_marginLeft="30dp" android:layout_marginTop="230dp"/>
+    <TextView style="@style/MenuFont" android:layout_width="wrap_content" android:layout_height="wrap_content"
+              android:textAppearance="?android:attr/textAppearanceMedium" android:text="Попробовать еще раз"
+              android:id="@+id/textView3" android:layout_marginLeft="330dp" android:layout_marginTop="230dp"/>
+</FrameLayout>

@@ -4,4 +4,16 @@
     <string name="offline">You are not online</string>
     <string name="pick_account">You must pick account to continue</string>
     <string name="server">http://192.168.56.1:8080/svion</string>
+    <string name="websocket_url">ws://192.168.56.1:8080/svion/game</string>
+    <string name="menu_start_game">Поиск игры</string>
+    <string name="menu_settings_game">Настройки</string>
+    <string name="menu_help">Справка</string>
+    <string name="menu_exit">Выход</string>
+    <string name="settings_sound_on">Звук вкл.</string>
+    <string name="settings_sound_off">Звук выкл.</string>
+    <string name="settings_vibration_on">Вибро вкл.</string>
+    <string name="settings_vibration_off">Вибро выкл.</string>
+    <string name="settings_back">Назад</string>
+    <string name="help_about">Добро пожаловать в игру SVION!</string>
+    <string name="help_back">Назад</string>
 </resources>

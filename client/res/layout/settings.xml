@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android"
+        android:background="@drawable/b">
+    <TextView
+            android:id="@+id/sound"
+            style="@style/MenuFont"
+            android:text="@string/settings_sound_off" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:layout_gravity="center_horizontal"/>
+
+    <TextView
+            android:id="@+id/vibration"
+            style="@style/MenuFont"
+            android:text="@string/settings_vibration_off" android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"/>
+
+    <TextView
+            android:id="@+id/back"
+            style="@style/MenuFont"
+            android:text="@string/settings_back"
+            android:onClick="settings_back_click"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"/>
+    <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Play"
+            android:textSize="42sp" android:id="@+id/button" android:layout_row="0" android:layout_column="3"
+            />
+</LinearLayout>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android"
+        android:background="@drawable/b">
+    <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBar"
+            android:layout_below="@+id/textView" android:layout_centerHorizontal="true"/>
+    <TextView
+            style="@style/AboutFont"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Игра найдена, ожидание необходимого количества игроков..."
+            android:id="@+id/textView" android:layout_alignParentTop="true"
+            android:layout_marginTop="57dp"/>
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_alignParentStart="true" android:layout_below="@+id/progressBar" android:weightSum="1">
+        <TextView
+                style="@style/PlayersFont"
+                android:layout_width="100sp"
+                android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="игрок 1" android:layout_marginTop="36dp"
+                android:id="@+id/player1" android:layout_gravity="center_horizontal" android:textColor="#45ff44"
+                />
+        <TextView
+                style="@style/PlayersFont"
+                android:layout_width="100sp"
+                android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Игрок 2" android:layout_marginTop="36dp"
+                android:id="@+id/player2" android:layout_gravity="center_horizontal" android:textColor="#43ff51"/>
+        <TextView
+                style="@style/PlayersFont"
+                android:layout_width="100sp"
+                android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="игрок 3" android:layout_marginTop="36dp"
+                android:id="@+id/player3" android:layout_gravity="center_horizontal" android:textColor="#50ff4b"/>
+    </LinearLayout>
+</RelativeLayout>
