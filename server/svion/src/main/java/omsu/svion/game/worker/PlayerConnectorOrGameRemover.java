@@ -68,7 +68,7 @@ public class PlayerConnectorOrGameRemover extends Thread{
                     }
                     else {
                         logger.debug("user no exists session is "+newUserConnectedMessage.getSession());
-                        player = new Player(newUserConnectedMessage.getSession().getPrincipal().getName(),newUserConnectedMessage.getSession());
+                        player = new Player(newUserConnectedMessage.getSession().getPrincipal().getName(),newUserConnectedMessage.getSession(),0);
                         logger.debug("user no exists 1");
                         gameList.getWaitingForStartGame().addPlayer(player.getEmail(),player);
                         logger.debug("new size is"+gameList.getWaitingForStartGame().getPlayers().size());

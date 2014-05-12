@@ -11,8 +11,10 @@ public class NewUserConnectedMessage extends GameManagementMessage{
         this.session = session;
     }
      private WebSocketSession session;
-
+     private int playerScore;
     public WebSocketSession getSession() {
         return session;
     }
+
+
 }

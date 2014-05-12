@@ -52,6 +52,7 @@ public class GoogleAuthenticationController {
         catch (UsernameNotFoundException e) {
             Account account = new Account();
             account.setEmail(info.getEmail());
+            account.setTotalScore(0);
             accountService.createAccount(account);
             userDetails = userDetailsService.loadUserByUsername(info.getEmail());
         }

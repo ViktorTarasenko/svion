@@ -6,9 +6,10 @@ import org.springframework.web.socket.WebSocketSession;
  * Created by victor on 05.04.14.
  */
 public class Player {
-    public Player(String email,WebSocketSession session) {
+    public Player(String email, WebSocketSession session, int score) {
         this.email = email;
         this.webSocketSession = session;
+        this.score = score;
     }
     private Runnable disconnectedScheduler;
 
@@ -19,12 +20,21 @@ public class Player {
     public void setDisconnectedScheduler(Runnable disconnectedScheduler) {
         this.disconnectedScheduler = disconnectedScheduler;
     }
-
+    private boolean answeredQuestion;
     private State state = State.ONLINE;
     private int score = 0;
     private Game game;
     private String email;
     private WebSocketSession webSocketSession;
+    int incrementScore;
+
+    public int getIncrementScore() {
+        return incrementScore;
+    }
+
+    public void setIncrementScore(int incrementScore) {
+        this.incrementScore = incrementScore;
+    }
 
     public WebSocketSession getWebSocketSession() {
         return webSocketSession;
@@ -73,4 +83,11 @@ public class Player {
         this.score = score;
     }
 
+    public boolean isAnsweredQuestion() {
+        return answeredQuestion;
+    }
+
+    public void setAnsweredQuestion(boolean answeredQuestion) {
+        this.answeredQuestion = answeredQuestion;
+    }
 }

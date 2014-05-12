@@ -7,5 +7,6 @@ import omsu.svion.entities.Account;
  */
 public interface AccountService {
     public Account findByEmail(String email);
+    public void setTotalScore(Long id,int totalScore);
     public void createAccount(Account account);
 }

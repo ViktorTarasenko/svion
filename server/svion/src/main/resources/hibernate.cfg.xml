@@ -10,5 +10,6 @@
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.hbm2ddl.auto">update</property>
         <mapping class="omsu.svion.entities.Account" />
+        <mapping class="omsu.svion.entities.Question" />
     </session-factory>
 </hibernate-configuration>

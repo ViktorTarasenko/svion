@@ -58,7 +58,7 @@ public class UserOccasionallyDisconnectedHandler implements GameMessageHandler {
                     } catch (InterruptedException e) {
                         return;
                     }
-                    if (p.getDisconnectedScheduler() == this){
+                    if (p.getDisconnectedScheduler() == this) {
                         UserDidNotAppearTooLong userDidNotAppearTooLong = new UserDidNotAppearTooLong();
                         userDidNotAppearTooLong.setSession(mes.getSession());
                         playerConnectorOrGameRemover1.handle(userDidNotAppearTooLong);

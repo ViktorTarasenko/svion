@@ -22,6 +22,12 @@ public class AccountServiceImpl implements AccountService{
         return (Account) query.uniqueResult();
     }
     @Transactional
+    public void setTotalScore(Long id, int totalScore) {
+        Account account = (Account) sessionFactory.getCurrentSession().get(Account.class,id);
+        account.setTotalScore(totalScore);
+    }
+
+    @Transactional
     public void createAccount(Account account) {
         sessionFactory.getCurrentSession().save(account);
     }

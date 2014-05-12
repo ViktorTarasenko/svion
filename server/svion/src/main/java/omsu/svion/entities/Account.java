@@ -1,5 +1,7 @@
 package omsu.svion.entities;
 
+import com.sun.istack.internal.NotNull;
+
 import javax.persistence.*;
 
 /**
@@ -15,6 +17,9 @@ public class Account extends AbstractEntity{
     private static final long serialVersionUID = 1L;
     @Column(name = "email",length = 255)
     private String email;
+    @NotNull
+    @Column(name = "total_score",nullable = false)
+    private int totalScore;
 
     public String getEmail() {
         return email;
@@ -22,5 +27,13 @@ public class Account extends AbstractEntity{
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public int getTotalScore() {
+        return totalScore;
+    }
+
+    public void setTotalScore(int totalScore) {
+        this.totalScore = totalScore;
     }
 }

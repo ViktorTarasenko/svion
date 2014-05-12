@@ -4,7 +4,9 @@ import omsu.svion.game.Player;
 import omsu.svion.game.model.PlayerModel;
 import omsu.svion.game.states.State;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by victor on 09.04.14.
@@ -34,4 +36,6 @@ public class GameStateUpdateMessage extends MessageFromServer {
     public void setPlayers(List<PlayerModel> players) {
         this.players = players;
     }
+
+
 }

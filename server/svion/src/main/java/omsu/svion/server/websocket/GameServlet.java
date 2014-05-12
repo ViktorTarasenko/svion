@@ -1,5 +1,7 @@
 package omsu.svion.server.websocket;
 
+import omsu.svion.dao.AccountService;
+import omsu.svion.entities.Account;
 import omsu.svion.game.Game;
 import omsu.svion.game.Player;
 import omsu.svion.game.PlayerList;
@@ -29,6 +31,8 @@ public class GameServlet extends TextWebSocketHandler {
     private TaskExecutor taskExecutor;
     @Autowired
     private PlayerList playerList;
+    @Autowired
+    private AccountService accountService;
     private static final Logger logger = Logger.getLogger(GameServlet.class);
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
