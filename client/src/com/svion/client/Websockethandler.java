@@ -36,7 +36,7 @@ public class Websockethandler {
 
             @Override
             public void onMessage(String message) {
-                Log.d("lol ", message);
+                Log.d("got message ", message);
                 try {
                     String className = objectMapper.readTree(message).path("className").asText();
                     Log.d("className is",className);

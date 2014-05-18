@@ -51,23 +51,6 @@ public class GameUpdateStateMessageWaitingHandler implements MessageFromServerHa
             });
 
         }
-        else if (gameStateUpdateMessage.getNewState().equals(ChoosingCategory.class)) {
-            Intent intent = new Intent(activity, GameActivity.class);
-            String[] playersNames = new String[3];
-            int[] playersScores = new int[3];
-            for (int i =0;i < gameStateUpdateMessage.getPlayers().size();++i) {
-                playersNames[i % 3] = gameStateUpdateMessage.getPlayers().get(i).getEmail();
-                playersScores[i % 3] = gameStateUpdateMessage.getPlayers().get(i).getScore();
-            }
-            Log.d("dsa", "fullfilled players");
-            intent.putExtra("playersNames",playersNames);
-            intent.putExtra("playersScores",playersScores);
-            Log.d("dsa","starting activity");
-            Log.d("dsa",activity.toString());
-            activity.startActivity(intent);
-            Log.d("dsa","started activity");
-            activity.finish();
-        }
 
     }
 }

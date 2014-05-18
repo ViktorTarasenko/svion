@@ -13,9 +13,9 @@ import javax.persistence.*;
 @Table(name = "question",indexes = {@Index(name = "cost",columnList = "cost"),@Index(name = "theme",columnList = "theme")})
 @NamedQueries({
         @NamedQuery(name = Question.GET_COUNT_OF_QUESTIONS,query = "select count(q.id) from Question q where q.cost = :cost and q.theme = :theme"),
-        @NamedQuery(name = Question.FIND_BY_THEME_AND_COST,query = "select q from Question q where q.cost = :cost and q.theme = :theme order by id asc"),
-        @NamedQuery(name = Question.FIND_BY_THEME_AND_COST_EXCLUDE,query = "select q from Question q where q.cost = :cost and q.theme = :theme and not q.id in (:alreadyUsedIds) order by id asc"),
-        @NamedQuery(name = Question.GET_COUNTS_OF_NOT_USED_QUESTIONS,query = "select count(q.id) from Question q where q.cost = :cost and q.theme = :theme and not q.id in (:alreadyUsedIds) order by id asc"),
+        @NamedQuery(name = Question.FIND_BY_THEME_AND_COST,query = "select q from Question q where q.cost = :cost and q.theme = :theme "),
+        @NamedQuery(name = Question.FIND_BY_THEME_AND_COST_EXCLUDE,query = "select q from Question q where q.cost = :cost and q.theme = :theme and  q.id not in (:alreadyUsedIds)"),
+        @NamedQuery(name = Question.GET_COUNTS_OF_NOT_USED_QUESTIONS,query = "select count(*) from Question q where q.cost = :cost and q.theme = :theme and  q.id not in (:alreadyUsedIds)"),
 
 
 })
@@ -24,6 +24,8 @@ public class Question extends AbstractEntity{
     public static final String FIND_BY_THEME_AND_COST = "FIND_QUESTION_BY_THEME_AND_COST";
     public static final String GET_COUNTS_OF_NOT_USED_QUESTIONS = "GET_COUNTS_OF_NOT_USED_QUESTIONS";
     public static final String FIND_BY_THEME_AND_COST_EXCLUDE = "FIND_QUESTION_BY_THEME_AND_COST_EXCLUDE";
+    @Column(name = "text",columnDefinition = "TEXT",nullable = false)
+    private String text;
     @Column(name = "image",columnDefinition = "TEXT",nullable = false)
     private String image;
     @Column(name = "var1",columnDefinition = "TEXT",nullable = false)
@@ -114,5 +116,13 @@ public class Question extends AbstractEntity{
 
     public void setCost(Cost cost) {
         this.cost = cost;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 }

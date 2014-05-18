@@ -44,13 +44,16 @@ public class ThemeAndCostChosenHandler implements GameMessageHandler {
         logger.debug("cast message");
         int countOfPossibleQuestions = questionService.getCountOfRemainingQuestionsByThemeAndCost(chooseThemeAndCostMessage.getTheme(), chooseThemeAndCostMessage.getCost(),game.getUsedQuestionsIds()).intValue();
         logger.debug("questions available "+countOfPossibleQuestions);
-        int questionNumber = new SecureRandom().nextInt() % countOfPossibleQuestions;
+        int questionNumber = Math.abs(new SecureRandom().nextInt()) % countOfPossibleQuestions;
         logger.debug("question number chosen "+questionNumber);
         final Question question = questionService.findNotUsedByThemeAndCost(chooseThemeAndCostMessage.getTheme(), chooseThemeAndCostMessage.getCost(),game.getUsedQuestionsIds(), questionNumber);
         logger.debug("question number chosen "+questionNumber);
+        game.getUsedQuestionsIds().add(question.getId());
+        logger.debug("removed category "+game.getAvailableCostsAndThemes().get(game.getTourNumber()-1).get(chooseThemeAndCostMessage.getTheme()).remove(chooseThemeAndCostMessage.getCost()));
+        logger.debug("added new used id" + question.getId());
         QuestionModel questionModel = null;
         try {
-            questionModel = new QuestionModel(question.getId(),imageLoader.loadByName(question.getImage()),question.getVar1(),question.getVar2(),question.getVar3(),question.getVar4(),question.getTimeForAnswer(),question.getCorrectAnswer(),question.getTheme(),question.getCost());
+            questionModel = new QuestionModel(question.getId(),imageLoader.loadByName(question.getImage()),question.getVar1(),question.getVar2(),question.getVar3(),question.getVar4(),question.getTimeForAnswer(),question.getCorrectAnswer(),question.getTheme(),question.getCost(),question.getText());
             logger.debug("question model constructed");
             game.setCurrentQuestion(questionModel);
             QuestionMessage questionMessage = new QuestionMessage(questionModel);
@@ -65,7 +68,8 @@ public class ThemeAndCostChosenHandler implements GameMessageHandler {
                         continue;
                     }
                     player.getWebSocketSession().sendMessage(stringQuestionMessage);
-                   }
+                    logger.debug("sending finished");
+                     }
             } catch (IOException e) {
                 throw  new RuntimeException(e);
             }

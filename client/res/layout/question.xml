@@ -9,13 +9,13 @@
 
     <ImageView
             android:layout_width="450sp"
-            android:layout_height="250sp"
+            android:layout_height="190sp"
             android:src="@drawable/ronaldinho"
             android:background="@drawable/picture_shape"
             android:id="@+id/imageView"/>
     <TableLayout
             android:layout_width="fill_parent"
-            android:layout_height="104dp" android:layout_marginLeft="20dp" android:layout_marginTop="255dp">
+            android:layout_height="104dp" android:layout_marginLeft="20dp" android:layout_marginTop="190dp">
         <TableRow android:layout_marginTop="5sp">
         <TextView style="@style/CostFont" android:background="@drawable/cell_shape" android:padding="8dp"
                   android:id="@+id/answer1"
@@ -42,4 +42,14 @@
                   android:text="Romario" android:layout_marginLeft="10dp"/>
         </TableRow>
     </TableLayout>
+    <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="84dp" android:layout_gravity="center_horizontal|bottom" android:weightSum="1">
+        <TextView
+                style="@style/CostFont"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="question"
+                android:id="@+id/questionText" android:layout_weight="1.02"/>
+    </TableRow>
 </FrameLayout>

@@ -10,12 +10,10 @@ import android.widget.ProgressBar;
 import com.codebutler.android_websockets.WebSocketClient;
 import omsu.svion.MessagesHandlersResolver;
 import omsu.svion.game.handler.MessageFromServerHandler;
+import omsu.svion.game.handler.impl.ChooseThemeAndCostSearchingHandler;
 import omsu.svion.game.handler.impl.GameUpdateStateMessageSearchingHandler;
 import omsu.svion.game.handler.impl.GameUpdateStateMessageWaitingHandler;
-import omsu.svion.messages.GameStateUpdateMessage;
-import omsu.svion.messages.KeepAliveMessage;
-import omsu.svion.messages.MessageFromClient;
-import omsu.svion.messages.MessageFromServer;
+import omsu.svion.messages.*;
 import org.apache.http.message.BasicNameValuePair;
 import org.codehaus.jackson.map.ObjectMapper;
 
@@ -38,6 +36,7 @@ public class SearchGame extends Activity {
         super.onCreate(savedInstanceState);
         MessagesHandlersResolver.getHandlers().clear();
         MessagesHandlersResolver.getHandlers().put(GameStateUpdateMessage.class, new MessageFromServerHandler[]{new GameUpdateStateMessageSearchingHandler(this)});
+        MessagesHandlersResolver.getHandlers().put(ChooseThemeAndCostRequestMessage.class, new MessageFromServerHandler[]{new ChooseThemeAndCostSearchingHandler(this)});
         setContentView(R.layout.search_game);
         Websockethandler.openWebosket(getResources().getString(R.string.websocket_url));
 

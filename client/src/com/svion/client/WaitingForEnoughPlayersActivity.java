@@ -7,7 +7,10 @@ import android.util.Log;
 import android.widget.TextView;
 import omsu.svion.MessagesHandlersResolver;
 import omsu.svion.game.handler.MessageFromServerHandler;
+import omsu.svion.game.handler.impl.ChooseThemeAndCostRequestWaitingHandler;
+import omsu.svion.game.handler.impl.ChooseThemeAndCostSearchingHandler;
 import omsu.svion.game.handler.impl.GameUpdateStateMessageWaitingHandler;
+import omsu.svion.messages.ChooseThemeAndCostRequestMessage;
 import omsu.svion.messages.GameStateUpdateMessage;
 
 /**
@@ -28,6 +31,7 @@ public class WaitingForEnoughPlayersActivity extends Activity {
         user3.setText(players[2]);
         MessagesHandlersResolver.getHandlers().clear();
         MessagesHandlersResolver.getHandlers().put(GameStateUpdateMessage.class, new MessageFromServerHandler[]{new GameUpdateStateMessageWaitingHandler(this)});
+        MessagesHandlersResolver.getHandlers().put(ChooseThemeAndCostRequestMessage.class, new MessageFromServerHandler[]{new ChooseThemeAndCostRequestWaitingHandler(this)});
         Log.d("act","ok");
 
     }

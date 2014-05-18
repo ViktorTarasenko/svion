@@ -18,6 +18,9 @@ public class GameStateUpdateMessage extends MessageFromServer {
         this.className = GameStateUpdateMessage.class.getCanonicalName();
     }
 
+    public GameStateUpdateMessage() {
+    }
+
     private Class<? extends State> newState;
     private List<PlayerModel> players;
 

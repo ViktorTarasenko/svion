@@ -3,10 +3,12 @@ package omsu.svion.messages;
 
 import omsu.svion.game.model.QuestionModel;
 
+import java.io.Serializable;
+
 /**
  * Created by victor on 12.05.14.
  */
-public class QuestionMessage extends MessageFromServer {
+public class QuestionMessage  extends MessageFromServer implements Serializable{
     public QuestionMessage(QuestionModel questionModel) {
         this.questionModel = questionModel;
         this.className =  QuestionMessage.class.getCanonicalName();

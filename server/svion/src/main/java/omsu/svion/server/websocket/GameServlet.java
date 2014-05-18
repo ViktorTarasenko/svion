@@ -58,6 +58,7 @@ public class GameServlet extends TextWebSocketHandler {
             logger.debug("message class is "+messageClass);
             if (MessageFromClient.class.isAssignableFrom(messageClass)) {
                 MessageFromClient msg = objectMapper.readValue(message.getPayload(),(Class<? extends MessageFromClient>)messageClass);
+                msg.setSession(session);
                 if (!(msg instanceof KeepAliveMessage)) {
                  game.handleMessage(msg);
                 }

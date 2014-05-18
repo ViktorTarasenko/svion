@@ -1,20 +1,24 @@
 package omsu.svion.messages;
+
+
 import omsu.svion.game.model.PlayerModel;
 import omsu.svion.game.states.State;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by victor on 09.04.14.
  */
 public class GameStateUpdateMessage extends MessageFromServer {
-    public GameStateUpdateMessage() {
-
-    }
     public GameStateUpdateMessage(List<PlayerModel> players, Class<? extends State> newState) {
         this.players = players;
         this.newState = newState;
         this.className = GameStateUpdateMessage.class.getCanonicalName();
+    }
+
+    public GameStateUpdateMessage() {
     }
 
     private Class<? extends State> newState;
@@ -35,5 +39,6 @@ public class GameStateUpdateMessage extends MessageFromServer {
     public void setPlayers(List<PlayerModel> players) {
         this.players = players;
     }
+
 
 }

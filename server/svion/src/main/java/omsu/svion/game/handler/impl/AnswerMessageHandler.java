@@ -33,17 +33,23 @@ public class AnswerMessageHandler implements GameMessageHandler {
     private ObjectMapper objectMapper;
     private static final Logger logger = Logger.getLogger(AnswerMessageHandler.class);
     public void handle(AbstractMessage message, Game game) {
+        logger.debug("somebody answered question");
         AnswerMessage answerMessage = (AnswerMessage) message;
         QuestionModel questionModel = game.getCurrentQuestion();
+        logger.debug(questionModel+" current question");
         Player player = game.getPlayer(message.getSession().getPrincipal().getName());
         player.setAnsweredQuestion(true);
         if (answerMessage.getVariant() == questionModel.getCorrectAnswer()) {
+            logger.debug(player.getEmail()+" answered correctly");
             player.setIncrementScore(questionModel.getCost().getCost());
+            logger.debug("incremented score "+questionModel.getCost().getCost());
         }
         else {
+            logger.debug(player.getEmail()+" answered wrong");
             player.setIncrementScore(0);
         }
         if (isAllAnswered(game)) {
+            logger.debug("all answered, firing handler for it");
             AnsweringFinishedMessage answeringFinishedMessage = new AnsweringFinishedMessage(message.getSession());
             game.handleMessage(answeringFinishedMessage);
         }

@@ -21,6 +21,7 @@
 
 
 	<http auto-config='true' use-expressions='true'>
+        <intercept-url pattern="/hello" access="permitAll" />
         <intercept-url pattern="/authorize/google" access="permitAll" />
 		<intercept-url pattern="/**" access="isAuthenticated()" />
         <logout invalidate-session="true" logout-url="/logout" />

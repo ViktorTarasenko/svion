@@ -3,31 +3,72 @@ package com.svion.client;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.util.Pair;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.view.View.OnClickListener;
 import omsu.svion.MessagesHandlersResolver;
+import omsu.svion.game.handler.MessageFromServerHandler;
+import omsu.svion.game.handler.impl.GameUpdateStateMessageWaitingHandler;
+import omsu.svion.game.handler.impl.QuestionMessageHandler;
+import omsu.svion.messages.ChooseThemeAndCostMessage;
+import omsu.svion.messages.GameStateUpdateMessage;
+import omsu.svion.messages.QuestionMessage;
+import omsu.svion.questions.Cost;
+import omsu.svion.questions.Theme;
+import org.codehaus.jackson.map.ObjectMapper;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 /**
  * Created by victor on 14.03.14.
  */
 public class GameActivity extends Activity {
+    public Map<Pair<Theme, Cost>, TextView> getTextViews() {
+        return textViews;
+    }
+    private TextView[] themes = null;
+
+    private TextView[] costs = null;
+
+    public TextView[] getThemes() {
+        return themes;
+    }
+
+    public TextView[] getCosts() {
+        return costs;
+    }
+
+    private Map<Pair<Theme,Cost>,TextView> textViews = new HashMap<Pair<Theme, Cost>, TextView>();
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MessagesHandlersResolver.getHandlers().clear();
+        refresh(getIntent());
+
+    }
+    @Override
+    public void onNewIntent(Intent intent) {
+       super.onNewIntent(intent);
+        refresh(intent);
+
+    }
+    public  void refresh(Intent intent) {
         setContentView(R.layout.game);
-       /* TextView[] themes = new TextView[]{
+        MessagesHandlersResolver.getHandlers().clear();
+        themes = new TextView[]{
                 (TextView)findViewById(R.id.textView),
                 (TextView)findViewById(R.id.textView6),
                 (TextView)findViewById(R.id.textView12),
                 (TextView)findViewById(R.id.textView18),
                 (TextView)findViewById(R.id.textView24),
                 (TextView)findViewById(R.id.textView30)
-        };*/
-
-        TextView[] costs = new TextView[]{
+        };
+        costs =  new TextView[]{
                 (TextView)findViewById(R.id.textView1),
                 (TextView)findViewById(R.id.textView2),
                 (TextView)findViewById(R.id.textView3),
@@ -59,6 +100,13 @@ public class GameActivity extends Activity {
                 (TextView)findViewById(R.id.textView34),
                 (TextView)findViewById(R.id.textView35)
         };
+        for (TextView cost : costs) {
+            cost.setText("");
+        }
+        for (TextView theme : themes) {
+            theme.setText("");
+        }
+
 
         TextView[] players_names = new TextView[]{
                 (TextView)findViewById(R.id.textView36),
@@ -70,29 +118,69 @@ public class GameActivity extends Activity {
                 (TextView)findViewById(R.id.textView39),
                 (TextView)findViewById(R.id.textView41)
         };
-        String[] playerNames = getIntent().getStringArrayExtra("playersNames");
-        int[] playerScores = getIntent().getIntArrayExtra("playersScores");
+        String[] playerNames = intent.getStringArrayExtra("playersNames");
+        int[] playerScores = intent.getIntArrayExtra("playersScores");
+        Map<Theme,List<Cost>> availableThemesAndCosts = (Map<Theme, List<Cost>>) intent.getSerializableExtra("availableThemesAndCosts");
         for (int i = 0;i<players_names.length;++i) {
             players_names[i].setText(playerNames[i % playerNames.length]);
         }
-       //players_scores[0].setText(playerScores[0]);
-        //players_scores[1].setText(playerScores[1]);
-        //players_scores[2].setText(playerScores[2]);
-        OnClickListener CostClick = new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(GameActivity.this, QuestionActivity.class);
-                //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                v.setOnClickListener(null);
-                startActivity(intent);
-            }
-        };
-
-        for(int i=0;i<costs.length;i++)
-        {
-            costs[i].setOnClickListener(CostClick);
+        for (int i = 0;i<players_scores.length;++i) {
+            players_scores[i].setText(Integer.toString(playerScores[i % playerScores.length]));
         }
+        int i=0,j;
+        for (Theme theme : availableThemesAndCosts.keySet()) {
+            themes[i].setText(theme.getRussianName());
+            j = 0;
+            for (Cost cost : availableThemesAndCosts.get(theme)) {
+                costs[i*5+j].setText(Integer.toString(cost.getCost()));
+                textViews.put(new Pair<Theme, Cost>(theme,cost),costs[i*5+j]);
+                ++j;
+            }
+            ++i;
+        }
+        MessagesHandlersResolver.getHandlers().clear();
+        MessagesHandlersResolver.getHandlers().put(QuestionMessage.class, new MessageFromServerHandler[]{new QuestionMessageHandler(this)});
+        boolean answering =  intent.getBooleanExtra("answering",false);
+        Log.d("answering",answering+"");
+        String answeringUser = intent.getStringExtra("answeringUser");
+        Log.d("answering user",answeringUser);
+        TextView whoAnswersDisplay = (TextView) findViewById(R.id.textView42);
+        if (answering) {
+            Log.d("answering user","1");
+            whoAnswersDisplay.setText("Выберите тему и стоимость вопроса!");
+            Log.d("answering user","2");
+            i = 0;
+            for (final Theme theme : availableThemesAndCosts.keySet()) {
+                Log.d("answering user","2");
+                j = 0;
+                for (final Cost cost : availableThemesAndCosts.get(theme)) {
+                    Log.d("answering user","3");
+                    costs[i * 5 + j].setOnClickListener(
+                            new OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Log.d("click","clicked theme "+theme+" cost "+cost);
+                                    ObjectMapper objectMapper = new ObjectMapper();
+                                    ChooseThemeAndCostMessage chooseThemeAndCostMessage = new ChooseThemeAndCostMessage(cost, theme);
+                                    try {
+                                        Websockethandler.getWebsocketClient().send(objectMapper.writeValueAsString(chooseThemeAndCostMessage));
+                                    } catch (IOException e) {
+                                        throw new RuntimeException();
+                                    }
+                                }
+                            }
+                    );
+                    Log.d("answering user","4");
 
-
+                    ++j;
+                }
+                ++i;
+            }
+        }
+        else {
+            Log.d("not answering user","1");
+            whoAnswersDisplay.setText("Игрок "+answeringUser+" выбирает тему и стоимость");
+            Log.d("not answering user","1");
+        }
     }
 }

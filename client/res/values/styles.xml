@@ -36,7 +36,7 @@
     </style>
 
     <style name="PlayersFont">
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:textColor">#ffff0000</item>
         <item name="android:textStyle">normal</item>
         <item name="android:clickable">true</item>
@@ -46,7 +46,7 @@
     </style>
 
     <style name="ScoresFont">
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:textColor">#ff48ff70</item>
         <item name="android:textStyle">normal</item>
         <item name="android:clickable">true</item>

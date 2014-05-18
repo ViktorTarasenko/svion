@@ -34,7 +34,7 @@
                       android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium"
                       android:text="500"/>
         </TableRow>
-        <TableRow android:id="@+id/tableRow" android:layout_width="match_parent" android:layout_height="wrap_content">
+        <TableRow android:id="@+id/tableRow1" android:layout_width="match_parent" android:layout_height="wrap_content">
             <TextView style="@style/CostFont" android:background="@drawable/cell_shape" android:padding="8dp"
                       android:id="@+id/textView6" android:layout_width="wrap_content"
                       android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium"
@@ -200,7 +200,12 @@
                   android:layout_width="100sp"
                   android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium"
                   android:text="Счет:"/>
-"/>
+        <TextView style="@style/PlayersFont"
+                  android:id="@+id/textView42"
+                  android:layout_width="100sp"
+                  android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium"
+                  android:text="Choose theme and cost:"/>
+
     </LinearLayout>
 
 </GridLayout>

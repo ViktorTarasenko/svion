@@ -1,6 +1,6 @@
 package omsu.svion.entities;
 
-import com.sun.istack.internal.NotNull;
+
 
 import javax.persistence.*;
 
@@ -15,9 +15,8 @@ import javax.persistence.*;
 public class Account extends AbstractEntity{
     public static final String FIND_BY_EMAIL  = "FIND_ACCOUNT_BY_EMAIL";
     private static final long serialVersionUID = 1L;
-    @Column(name = "email",length = 255)
+    @Column(name = "email",length = 255,nullable = false)
     private String email;
-    @NotNull
     @Column(name = "total_score",nullable = false)
     private int totalScore;
 

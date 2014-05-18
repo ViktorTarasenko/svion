@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,7 +33,9 @@ public class QuestionServiceImpl implements QuestionService {
         Query query = sessionFactory.getCurrentSession().getNamedQuery(Question.GET_COUNTS_OF_NOT_USED_QUESTIONS);
         query.setParameter("theme",theme);
         query.setParameter("cost",cost);
-        query.setParameter("alreadyUsedIds",alreadyUsedIds);
+        ArrayList<Long> dummy = new ArrayList<Long>(1);
+        dummy.add(-1L);
+        query.setParameterList("alreadyUsedIds", alreadyUsedIds.size() > 0 ? alreadyUsedIds : dummy);
         return (Long) query.uniqueResult();
     }
     @Transactional(readOnly = true)
@@ -47,7 +50,9 @@ public class QuestionServiceImpl implements QuestionService {
         Query query = sessionFactory.getCurrentSession().getNamedQuery(Question.FIND_BY_THEME_AND_COST_EXCLUDE);
         query.setParameter("theme",theme);
         query.setParameter("cost",cost);
-        query.setParameter("alreadyUsedIds",alreadyUsedIds);
+        ArrayList<Long> dummy = new ArrayList<Long>(1);
+        dummy.add(-1L);
+        query.setParameterList("alreadyUsedIds", alreadyUsedIds.size() > 0 ? alreadyUsedIds : dummy);
         query.setFirstResult(questionNumber);
         query.setMaxResults(1);
         return ((List<Question>) query.list()).isEmpty() ? null : ((List<Question>) query.list()).get(0);

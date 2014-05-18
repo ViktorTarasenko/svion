@@ -42,27 +42,37 @@ public class PlayerAddedHandler implements GameMessageHandler {
         }
         logger.debug("2");
         PlayerConverter playerConverter = new PlayerConverter();
-        ChooseThemeAndCostRequestMessage mes =  new ChooseThemeAndCostRequestMessage(playerConverter.convert(new ArrayList<Player>(game.getPlayers().values())),game.getAvailableCostsAndThemes().get(game.getTourNumber()-1),false,game.getTourNumber(),game.getCurrentQuestionNumber());
-        ChooseThemeAndCostRequestMessage messageForAnswering = new ChooseThemeAndCostRequestMessage(playerConverter.convert(new ArrayList<Player>(game.getPlayers().values())),game.getAvailableCostsAndThemes().get(game.getTourNumber()-1),true,game.getTourNumber(),game.getCurrentQuestionNumber());
+        if (game.getState().equals(ChoosingCategory.class)) {
+            int answeringPlayer = Math.abs(new SecureRandom().nextInt()) % game.getPlayers().values().size();
 
-        Player[] players = (Player[]) game.getPlayers().values().toArray();
-        Player player;
-        int answeringPlayerNumber = new SecureRandom().nextInt() % game.getPlayers().size();
-
-        logger.debug("3");
-            for (int i = 0; i < players.length;++i)
-            {
-             player =players[i];
+            logger.debug("3");
+            Player playerToAnswer= null;
+            logger.debug("4");
+            int i= 0;
+            logger.debug("5");
+            for (Player player : game.getPlayers().values()) {
+                    if (i == answeringPlayer) {
+                       playerToAnswer = player;
+                    }
+                ++i;
+            }
+            logger.debug("5");
+            logger.debug("player to answer "+playerToAnswer);
+            ChooseThemeAndCostRequestMessage mes = new ChooseThemeAndCostRequestMessage(playerConverter.convert(new ArrayList<Player>(game.getPlayers().values())), game.getAvailableCostsAndThemes().get(game.getTourNumber() - 1), false, game.getTourNumber(), game.getCurrentQuestionNumber(),playerToAnswer.getEmail());
+            logger.debug("6");
+            ChooseThemeAndCostRequestMessage messageForAnswering = new ChooseThemeAndCostRequestMessage(playerConverter.convert(new ArrayList<Player>(game.getPlayers().values())), game.getAvailableCostsAndThemes().get(game.getTourNumber() - 1), true, game.getTourNumber(), game.getCurrentQuestionNumber(),playerToAnswer.getEmail());
+            logger.debug("6");
+             i= 0;
+            for (Player player : game.getPlayers().values()) {
                 if (player.getState() != Player.State.ONLINE) {
                     logger.debug("skipped player" + player);
                     continue;
                 }
                 try {
-                    if (i == answeringPlayerNumber) {
+                    if (i == answeringPlayer) {
                         player.getWebSocketSession().sendMessage(new TextMessage(objectMapper.writeValueAsString(messageForAnswering)));
                         game.setPreviousAnsweredPlayer(player);
-                    }
-                    else {
+                    } else {
                         player.getWebSocketSession().sendMessage(new TextMessage(objectMapper.writeValueAsString(mes)));
                     }
                 } catch (IOException e) {
@@ -70,10 +80,9 @@ public class PlayerAddedHandler implements GameMessageHandler {
                     userOccasionallyDisconnected.setSession(message.getSession());
                     playerConnectorOrGameRemover.handle(userOccasionallyDisconnected);
                 }
+                ++i;
             }
-
-        logger.debug("4");
-        if (game.getState().equals(ChoosingCategory.class)) {
+            logger.debug("7");
             final Game game1 = game;
             final WebSocketSession webSocketSession = message.getSession();
             Runnable costAndThemeChosenChecker = new Runnable() {
@@ -84,6 +93,7 @@ public class PlayerAddedHandler implements GameMessageHandler {
                         return;
                     }
                     if (game1.getCostAndThemeChosenChecker() == this) {
+                        logger.debug("woke up, theme and cost was not chosen");
                         ThemeAndCostNotChosenMessage themeAndCostNotChosenMessage = new ThemeAndCostNotChosenMessage();
                         themeAndCostNotChosenMessage.setSession(webSocketSession);
                         game1.handleMessage(themeAndCostNotChosenMessage);
@@ -92,7 +102,32 @@ public class PlayerAddedHandler implements GameMessageHandler {
             };
             game.setCostAndThemeChosenChecker(costAndThemeChosenChecker);
             taskExecutor.execute(costAndThemeChosenChecker);
-        }
+            }
+            else {
+            logger.debug("sending game update message, still game not started");
+            GameStateUpdateMessage gameStateUpdateMessage = new GameStateUpdateMessage(playerConverter.convert(new ArrayList<Player>(game.getPlayers().values())),game.getState());
+            logger.debug("a "+game.getPlayers().values().size());
+            logger.debug("b");
+            for (Player player : game.getPlayers().values()) {
+                logger.debug("lol1");
+                logger.debug("lol2");
+                if (player.getState() != Player.State.ONLINE) {
+                    logger.debug("skipped player" + player);
+                    continue;
+                }
+                try {
+                    player.getWebSocketSession().sendMessage(new TextMessage(objectMapper.writeValueAsString(gameStateUpdateMessage)));
+                    logger.debug("lol3");
+
+                } catch (IOException e) {
+                    logger.error(e);
+                    UserOccasionallyDisconnected userOccasionallyDisconnected = new UserOccasionallyDisconnected();
+                    userOccasionallyDisconnected.setSession(message.getSession());
+                    playerConnectorOrGameRemover.handle(userOccasionallyDisconnected);
+                }
+            }
+            logger.debug("sending game update message, still game not started 1");
+            }
 
         }
 }

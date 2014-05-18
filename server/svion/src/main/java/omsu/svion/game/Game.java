@@ -35,8 +35,8 @@ public class Game {
             costsForThirdRound.add(i,Cost.getByCost(thirdCost));
         }
         for (Theme theme : Theme.values()) {
-                availableCostsAndThemes.get(0).put(theme, costsForFirstRound);
-                availableCostsAndThemes.get(1).put(theme, costsForSecondRound);
+                availableCostsAndThemes.get(0).put(theme,new ArrayList<Cost>(costsForFirstRound));
+                availableCostsAndThemes.get(1).put(theme, new ArrayList<Cost>(costsForSecondRound));
                 availableCostsAndThemes.get(2).put(theme, costsForThirdRound);
         }
         setState(WaitingForEnoughPlayers.class);
@@ -77,7 +77,7 @@ public class Game {
     private QuestionModel currentQuestion;
     private GameThread gameThread;
     public boolean isReadyToStart(){
-        return players.keySet().size() >= 3;
+        return players.keySet().size() >= 2;
     }
 
     public List<Long> getUsedQuestionsIds() {
