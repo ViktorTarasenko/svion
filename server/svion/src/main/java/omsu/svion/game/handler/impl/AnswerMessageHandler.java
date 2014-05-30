@@ -50,7 +50,7 @@ public class AnswerMessageHandler implements GameMessageHandler {
         }
         if (isAllAnswered(game)) {
             logger.debug("all answered, firing handler for it");
-            AnsweringFinishedMessage answeringFinishedMessage = new AnsweringFinishedMessage(message.getSession());
+            AnsweringFinishedMessage answeringFinishedMessage = new AnsweringFinishedMessage(message.getSession(),questionModel.getCorrectAnswer());
             game.handleMessage(answeringFinishedMessage);
         }
 

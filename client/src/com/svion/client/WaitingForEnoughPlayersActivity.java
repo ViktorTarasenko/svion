@@ -10,6 +10,7 @@ import omsu.svion.game.handler.MessageFromServerHandler;
 import omsu.svion.game.handler.impl.ChooseThemeAndCostRequestWaitingHandler;
 import omsu.svion.game.handler.impl.ChooseThemeAndCostSearchingHandler;
 import omsu.svion.game.handler.impl.GameUpdateStateMessageWaitingHandler;
+import omsu.svion.game.states.WaitingForEnoughPlayers;
 import omsu.svion.messages.ChooseThemeAndCostRequestMessage;
 import omsu.svion.messages.GameStateUpdateMessage;
 
@@ -17,8 +18,10 @@ import omsu.svion.messages.GameStateUpdateMessage;
  * Created by victor on 02.05.14.
  */
 public class WaitingForEnoughPlayersActivity extends Activity {
+    public static WaitingForEnoughPlayersActivity main;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        main = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.waiting_enough_players);
         Log.d("act","starting");
@@ -34,5 +37,21 @@ public class WaitingForEnoughPlayersActivity extends Activity {
         MessagesHandlersResolver.getHandlers().put(ChooseThemeAndCostRequestMessage.class, new MessageFromServerHandler[]{new ChooseThemeAndCostRequestWaitingHandler(this)});
         Log.d("act","ok");
 
+    }
+    @Override
+    public void onBackPressed() {
+        Websockethandler.closeWebsocket();
+        if (SearchGame.main != null) {
+            SearchGame.main.finish();
+        }
+        if (WaitingForEnoughPlayersActivity.main != null) {
+            WaitingForEnoughPlayersActivity.main.finish();
+        }
+        if (GameActivity.main != null) {
+            GameActivity.main.finish();
+        }
+        if (QuestionActivity.main != null) {
+            QuestionActivity.main.finish();
+        }
     }
 }

@@ -22,7 +22,17 @@ public class GameStateUpdateMessage extends MessageFromServer {
     }
 
     private Class<? extends State> newState;
+
+    public Map<String, Integer> getIntegerParams() {
+        return integerParams;
+    }
+
+    public void setIntegerParams(Map<String, Integer> integerParams) {
+        this.integerParams = integerParams;
+    }
+
     private List<PlayerModel> players;
+    private Map<String,Integer> integerParams = new HashMap<String, Integer>();
 
     public Class<? extends State> getNewState() {
         return newState;
@@ -39,6 +49,9 @@ public class GameStateUpdateMessage extends MessageFromServer {
     public void setPlayers(List<PlayerModel> players) {
         this.players = players;
     }
+
+
+
 
 
 }

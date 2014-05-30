@@ -1,11 +1,14 @@
 package omsu.svion.messages;
 
+import omsu.svion.game.model.PlayerModel;
+
+import java.util.List;
+
 /**
  * Created by victor on 12.05.14.
  */
 public class AnswerMessage extends MessageFromClient {
     public AnswerMessage(short variant) {
-
         this.variant = variant;
         this.className = AnswerMessage.class.getCanonicalName();
     }
@@ -23,4 +26,5 @@ public class AnswerMessage extends MessageFromClient {
     public void setVariant(short variant) {
         this.variant = variant;
     }
+
 }

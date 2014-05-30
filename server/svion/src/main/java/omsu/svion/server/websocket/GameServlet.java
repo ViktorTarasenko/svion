@@ -78,20 +78,12 @@ public class GameServlet extends TextWebSocketHandler {
     }
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-        logger.debug("closed connection");
-        if (status == CloseStatus.NORMAL) {
-            logger.debug("closed normal");
+        logger.debug("disconnect happened");
             UserLeftGame message = new UserLeftGame();
             message.setSession(session);
             playerConnectorOrGameRemover.handle(message);
 
-        }
-        else {
-            logger.debug("closed bad");
-            UserOccasionallyDisconnected message = new UserOccasionallyDisconnected();
-            message.setSession(session);
-            playerConnectorOrGameRemover.handle(message);
-        }
+
     }
     @Override
     public void handleTransportError(WebSocketSession session, Throwable exception) {

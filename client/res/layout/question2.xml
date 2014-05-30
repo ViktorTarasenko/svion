@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/b">
+
+
+    <ImageView
+            android:layout_width="426dp"
+            android:layout_height="236dp"
+            android:src="@drawable/ronaldinho"
+            android:background="@drawable/picture_shape"
+            android:id="@+id/imageView" android:layout_marginLeft="10dp" android:layout_marginTop="10dp"/>
+    <TableLayout
+            android:layout_width="fill_parent"
+            android:layout_height="104dp" android:layout_marginLeft="20dp" android:layout_marginTop="255dp">
+        <TableRow android:layout_marginLeft="6dp">
+        <TextView style="@style/CostFont" android:background="@drawable/cell_shape" android:padding="8dp"
+                  android:id="@+id/answer1"
+                  android:layout_width="190dp"
+                  android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium"
+                  android:text="Rivaldo"/>
+        <TextView style="@style/CostFont" android:background="@drawable/cell_shape" android:padding="8dp"
+                  android:id="@+id/answer2"
+                  android:layout_width="190sp"
+                  android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium"
+                  android:text="Ronaldo" android:layout_marginLeft="10dp"/>
+        </TableRow>
+
+        <TableRow android:layout_marginTop="5dp" android:layout_marginLeft="6dp">
+        <TextView style="@style/CostFont" android:background="@drawable/cell_shape" android:padding="8dp"
+                  android:id="@+id/answer3"
+                  android:layout_width="190dp"
+                  android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium"
+                  android:text="Ronaldinho"/>
+        <TextView style="@style/CostFont" android:background="@drawable/cell_shape" android:padding="8dp"
+                  android:id="@+id/answer4"
+                  android:layout_width="190sp"
+                  android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium"
+                  android:text="Romario" android:layout_marginLeft="10dp"/>
+        </TableRow>
+        <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+            <TextView
+                    style="@style/TimerFont"
+                    android:layout_width="110sp"
+                    android:layout_height="wrap_content"
+                    android:text="Время:10 сек"
+                    android:id="@+id/textView" android:layout_column="7" android:enabled="false"
+                    android:background="@drawable/timer_shape" android:layout_marginLeft="20dp"
+                    />
+        </TableRow>
+    </TableLayout>
+    <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="84dp" android:layout_gravity="center_horizontal|bottom" android:weightSum="1">
+        <TextView
+                style="@style/CostFont"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="question"
+                android:id="@+id/questionText" android:layout_weight="1.02"/>
+    </TableRow>
+    <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent"
+                  android:layout_marginLeft="450dp" android:layout_marginTop="20dp" android:id="@+id/linearLayout">
+        <TextView style="@style/PlayersFont" android:id="@+id/textView36" android:layout_width="100sp"
+                  android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium"
+                  android:text="Игрок1" android:background="@drawable/players_shape" android:lines="2"
+                  android:padding="1dp"/>
+        <TextView style="@style/ScoresFont" android:id="@+id/textView37" android:layout_width="100sp"
+                  android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium"
+                  android:text="Счет:" android:background="@drawable/players_shape" android:padding="1dp"/>
+        <TextView style="@style/PlayersFont" android:id="@+id/textView38" android:layout_width="100sp"
+                  android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium"
+                  android:text="Игрок2" android:layout_marginTop="36dp" android:background="@drawable/players_shape"
+                  android:lines="2" android:padding="1dp"/>
+        <TextView style="@style/ScoresFont" android:id="@+id/textView39" android:layout_width="100sp"
+                  android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium"
+                  android:text="Счет:" android:background="@drawable/players_shape" android:padding="1dp"/>
+        <TextView style="@style/PlayersFont" android:id="@+id/textView40" android:layout_width="100sp"
+                  android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium"
+                  android:text="Игрок12345678901234567890" android:layout_marginTop="36dp"
+                  android:background="@drawable/players_shape" android:lines="2" android:padding="1dp"/>
+        <TextView style="@style/ScoresFont" android:id="@+id/textView41" android:layout_width="100sp"
+                  android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium"
+                  android:text="Счет:" android:background="@drawable/players_shape" android:padding="1dp"/>
+    </LinearLayout>
+</FrameLayout>

@@ -30,24 +30,24 @@ import java.util.Map;
  * Created by victor on 14.03.14.
  */
 public class GameActivity extends Activity {
+    public static GameActivity main;
     public Map<Pair<Theme, Cost>, TextView> getTextViews() {
         return textViews;
     }
-    private TextView[] themes = null;
-
-    private TextView[] costs = null;
-
-    public TextView[] getThemes() {
-        return themes;
-    }
+    private TextView[] costs;
 
     public TextView[] getCosts() {
         return costs;
     }
 
+    public void setCosts(TextView[] costs) {
+        this.costs = costs;
+    }
+
     private Map<Pair<Theme,Cost>,TextView> textViews = new HashMap<Pair<Theme, Cost>, TextView>();
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        main = this;
         refresh(getIntent());
 
     }
@@ -58,9 +58,9 @@ public class GameActivity extends Activity {
 
     }
     public  void refresh(Intent intent) {
-        setContentView(R.layout.game);
         MessagesHandlersResolver.getHandlers().clear();
-        themes = new TextView[]{
+        setContentView(R.layout.game);
+        TextView[] themes = new TextView[]{
                 (TextView)findViewById(R.id.textView),
                 (TextView)findViewById(R.id.textView6),
                 (TextView)findViewById(R.id.textView12),
@@ -68,7 +68,7 @@ public class GameActivity extends Activity {
                 (TextView)findViewById(R.id.textView24),
                 (TextView)findViewById(R.id.textView30)
         };
-        costs =  new TextView[]{
+        TextView[] costs =  new TextView[]{
                 (TextView)findViewById(R.id.textView1),
                 (TextView)findViewById(R.id.textView2),
                 (TextView)findViewById(R.id.textView3),
@@ -100,10 +100,13 @@ public class GameActivity extends Activity {
                 (TextView)findViewById(R.id.textView34),
                 (TextView)findViewById(R.id.textView35)
         };
+        this.costs = costs;
         for (TextView cost : costs) {
+          cost.setTextAppearance(this,R.style.CostFont);
             cost.setText("");
         }
         for (TextView theme : themes) {
+            theme.setTextAppearance(this,R.style.CostFont);
             theme.setText("");
         }
 
@@ -140,6 +143,7 @@ public class GameActivity extends Activity {
         }
         MessagesHandlersResolver.getHandlers().clear();
         MessagesHandlersResolver.getHandlers().put(QuestionMessage.class, new MessageFromServerHandler[]{new QuestionMessageHandler(this)});
+        MessagesHandlersResolver.getHandlers().put(QuestionMessage.class, new MessageFromServerHandler[]{new QuestionMessageHandler(this)});
         boolean answering =  intent.getBooleanExtra("answering",false);
         Log.d("answering",answering+"");
         String answeringUser = intent.getStringExtra("answeringUser");
@@ -160,6 +164,7 @@ public class GameActivity extends Activity {
                                 @Override
                                 public void onClick(View v) {
                                     Log.d("click","clicked theme "+theme+" cost "+cost);
+                                    v.setBackground(GameActivity.this.getResources().getDrawable(R.drawable.right_answer));
                                     ObjectMapper objectMapper = new ObjectMapper();
                                     ChooseThemeAndCostMessage chooseThemeAndCostMessage = new ChooseThemeAndCostMessage(cost, theme);
                                     try {
@@ -181,6 +186,22 @@ public class GameActivity extends Activity {
             Log.d("not answering user","1");
             whoAnswersDisplay.setText("Игрок "+answeringUser+" выбирает тему и стоимость");
             Log.d("not answering user","1");
+        }
+    }
+    @Override
+    public void onBackPressed() {
+        Websockethandler.closeWebsocket();
+        if (SearchGame.main != null) {
+            SearchGame.main.finish();
+        }
+        if (WaitingForEnoughPlayersActivity.main != null) {
+            WaitingForEnoughPlayersActivity.main.finish();
+        }
+        if (GameActivity.main != null) {
+            GameActivity.main.finish();
+        }
+        if (QuestionActivity.main != null) {
+            QuestionActivity.main.finish();
         }
     }
 }

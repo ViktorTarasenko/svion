@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.ServletContext;
 import java.util.LinkedList;
 
 /**
@@ -18,14 +19,9 @@ import java.util.LinkedList;
  */
 @Controller
 public class HelloWorldController {
-    @Autowired
-    private QuestionService questionService;
     @RequestMapping(value = "/hello",method = RequestMethod.GET, produces="application/json")
     public @ResponseBody SimpleResponse getHello() {
-       long a = questionService.getCountOfRemainingQuestionsByThemeAndCost(Theme.ALL_ABOUT_FASHION, Cost.EIGHT_HUNDREDS,new LinkedList<Long>());
-        questionService.findNotUsedByThemeAndCost(Theme.ALL_ABOUT_FASHION,Cost.EIGHT_HUNDREDS,new LinkedList<Long>(),2);
-
-        return new SimpleResponse("привет, х*сосы!"+a);
+        return new SimpleResponse("test ");
     }
 
 }

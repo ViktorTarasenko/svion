@@ -36,11 +36,11 @@ public class UserDidNotAppearedTooLongHandler implements GameMessageHandler {
             game.removePlayer(message.getSession().getPrincipal().getName());
                logger.debug("now players size is"+game.getPlayers().size());
 
-                if (game.getPlayers().size() < 2) {
+                /*if (game.getPlayers().size() < 2) {
                     logger.debug("less than 2 players remains");
                     game.setState(Finished.class);
                     logger.debug("game is ended");
-                    GameFinished gameFinished = new GameFinished(GameFinished.Status.TOO_LITTLE_USERS);
+                    //GameFinished gameFinished = new GameFinished(GameFinished.Status.TOO_LITTLE_USERS);
                     for (Player p : game.getPlayers().values()) {
                         if (p.getState() != Player.State.ONLINE) {
                             continue;
@@ -92,7 +92,7 @@ public class UserDidNotAppearedTooLongHandler implements GameMessageHandler {
                         }
                     }
 
-                }
+                }*/
             }
         }
     private boolean checkIfWaitingUsersExists(Game game) {

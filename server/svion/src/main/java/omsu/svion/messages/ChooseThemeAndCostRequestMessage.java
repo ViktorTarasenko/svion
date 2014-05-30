@@ -13,7 +13,7 @@ import java.util.Map;
 public class ChooseThemeAndCostRequestMessage extends MessageFromServer {
 
 
-    public ChooseThemeAndCostRequestMessage(List<PlayerModel> players, Map<Theme, List<Cost>> availableThemesAndCosts, boolean answer, Integer newRound, int currentQuestion, String answeringUser) {
+    public ChooseThemeAndCostRequestMessage(List<PlayerModel> players, Map<Theme, List<Cost>> availableThemesAndCosts, boolean answer, Integer newRound, int currentQuestion, String answeringUser,Integer rightAnswer) {
         this.players = players;
         this.availableThemesAndCosts = availableThemesAndCosts;
         this.answer = answer;
@@ -21,6 +21,7 @@ public class ChooseThemeAndCostRequestMessage extends MessageFromServer {
         this.currentQuestion = currentQuestion;
         this.className = ChooseThemeAndCostRequestMessage.class.getCanonicalName();
         this.answeringUser = answeringUser;
+        this.rightAnswer = rightAnswer;
     }
     public ChooseThemeAndCostRequestMessage() {
         this.className = ChooseThemeAndCostRequestMessage.class.getCanonicalName();
@@ -32,6 +33,15 @@ public class ChooseThemeAndCostRequestMessage extends MessageFromServer {
     private Integer newRound;
     private int currentQuestion;
     private String answeringUser;
+    private Integer rightAnswer;
+
+    public Integer getRightAnswer() {
+        return rightAnswer;
+    }
+
+    public void setRightAnswer(Integer rightAnswer) {
+        this.rightAnswer = rightAnswer;
+    }
 
     public String getAnsweringUser() {
         return answeringUser;

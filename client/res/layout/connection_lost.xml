@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/a"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+    <TableRow android:layout_width="fill_parent" android:layout_height="fill_parent" android:id="@+id/tableRow2"
+              android:layout_marginTop="100dp">
+    </TableRow>
+    <TableRow android:layout_width="fill_parent" android:layout_height="fill_parent" android:id="@+id/tableRow3"
+              android:layout_marginTop="131dp">
+    </TableRow>
+    <TextView style="@style/EndgameFont" android:layout_width="fill_parent" android:layout_height="wrap_content"
+              android:text="Соединение с сервером потеряно!" android:id="@+id/textView5" android:layout_marginTop="180dp"/>
+    <TextView style="@style/AboutFont" android:layout_width="fill_parent" android:layout_height="wrap_content"
+              android:text="В главное меню" android:id="@+id/textView6" android:layout_marginTop="280dp"/>
+</FrameLayout>

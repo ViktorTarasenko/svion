@@ -3,8 +3,8 @@
     <string name="app_name">client</string>
     <string name="offline">You are not online</string>
     <string name="pick_account">You must pick account to continue</string>
-    <string name="server">http://192.168.56.1:8080/svion</string>
-    <string name="websocket_url">ws://192.168.56.1:8080/svion/game</string>
+    <string name="server">http://svion-team.no-ip.org:8080/svion</string>
+    <string name="websocket_url">ws://svion-team.no-ip.org:8080/svion/game</string>
     <string name="menu_start_game">Поиск игры</string>
     <string name="menu_settings_game">Настройки</string>
     <string name="menu_help">Справка</string>

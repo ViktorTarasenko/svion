@@ -58,9 +58,9 @@ public class PlayerAddedHandler implements GameMessageHandler {
             }
             logger.debug("5");
             logger.debug("player to answer "+playerToAnswer);
-            ChooseThemeAndCostRequestMessage mes = new ChooseThemeAndCostRequestMessage(playerConverter.convert(new ArrayList<Player>(game.getPlayers().values())), game.getAvailableCostsAndThemes().get(game.getTourNumber() - 1), false, game.getTourNumber(), game.getCurrentQuestionNumber(),playerToAnswer.getEmail());
+            ChooseThemeAndCostRequestMessage mes = new ChooseThemeAndCostRequestMessage(playerConverter.convert(new ArrayList<Player>(game.getPlayers().values())), game.getAvailableCostsAndThemes().get(game.getTourNumber() - 1), false, game.getTourNumber(), game.getCurrentQuestionNumber(),playerToAnswer.getEmail(),null);
             logger.debug("6");
-            ChooseThemeAndCostRequestMessage messageForAnswering = new ChooseThemeAndCostRequestMessage(playerConverter.convert(new ArrayList<Player>(game.getPlayers().values())), game.getAvailableCostsAndThemes().get(game.getTourNumber() - 1), true, game.getTourNumber(), game.getCurrentQuestionNumber(),playerToAnswer.getEmail());
+            ChooseThemeAndCostRequestMessage messageForAnswering = new ChooseThemeAndCostRequestMessage(playerConverter.convert(new ArrayList<Player>(game.getPlayers().values())), game.getAvailableCostsAndThemes().get(game.getTourNumber() - 1), true, game.getTourNumber(), game.getCurrentQuestionNumber(),playerToAnswer.getEmail(),null);
             logger.debug("6");
              i= 0;
             for (Player player : game.getPlayers().values()) {

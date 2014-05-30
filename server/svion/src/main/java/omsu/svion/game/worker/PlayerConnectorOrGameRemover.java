@@ -139,6 +139,7 @@ public class PlayerConnectorOrGameRemover extends Thread{
                         playerList.removePlayer(player.getEmail());
                         Game game  = player.getGame();
                         if (game != null){
+                            logger.debug("took msg: user left game");
                             game.handleMessage(message);
                         }
                     }

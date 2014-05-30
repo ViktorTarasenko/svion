@@ -30,6 +30,7 @@ import java.util.ArrayList;
 public class AnsweringFinishedHandler implements GameMessageHandler {
     private static final Logger logger = Logger.getLogger(AnsweringFinishedHandler.class);
     private PlayerConverter playerConverter = new PlayerConverter();
+    private SecureRandom secureRandom = new SecureRandom();
     @Autowired
     private AccountService accountService;
     @Autowired
@@ -39,6 +40,7 @@ public class AnsweringFinishedHandler implements GameMessageHandler {
     @Autowired
     private TaskExecutor taskExecutor;
      public void handle(AbstractMessage message, Game game) {
+         AnsweringFinishedMessage answeringFinishedMessage = (AnsweringFinishedMessage) message;
         logger.debug("answering finished");
          for (Player p : game.getPlayers().values()) {
              p.setScore(p.getScore()+p.getIncrementScore());
@@ -47,9 +49,9 @@ public class AnsweringFinishedHandler implements GameMessageHandler {
          }
          int newQuestionNumber = game.getCurrentQuestionNumber() + 1;
          logger.debug("new question number "+newQuestionNumber);
-         Integer newRound = newQuestionNumber % 15 == 0 ? game.getTourNumber() +1 : null;
+         Integer newRound = newQuestionNumber % 2 == 0 ? game.getTourNumber() +1 : null;
          logger.debug("new round "+newRound);
-         if((newRound == null) || (newRound <=3)) {
+         if((newRound == null) || (newRound <=2)) {
              game.setState(ChoosingCategory.class);
              logger.debug("now choosing category");
              game.setCurrentQuestionNumber(newQuestionNumber);
@@ -57,8 +59,8 @@ public class AnsweringFinishedHandler implements GameMessageHandler {
                  game.setTourNumber(newRound);
              }
              Player nextPlayerForChoosingThemeAndCost = getNextPlayerForChoosingThemeAndCost(game);
-             ChooseThemeAndCostRequestMessage msg =  new ChooseThemeAndCostRequestMessage(playerConverter.convert(new ArrayList<Player>(game.getPlayers().values())),game.getAvailableCostsAndThemes().get(game.getTourNumber()-1),false,newRound,game.getCurrentQuestionNumber(),nextPlayerForChoosingThemeAndCost.getEmail());
-             ChooseThemeAndCostRequestMessage messageForAnswering = new ChooseThemeAndCostRequestMessage(playerConverter.convert(new ArrayList<Player>(game.getPlayers().values())),game.getAvailableCostsAndThemes().get(game.getTourNumber()-1),true,newRound,game.getCurrentQuestionNumber(),nextPlayerForChoosingThemeAndCost.getEmail());
+             ChooseThemeAndCostRequestMessage msg =  new ChooseThemeAndCostRequestMessage(playerConverter.convert(new ArrayList<Player>(game.getPlayers().values())),game.getAvailableCostsAndThemes().get(game.getTourNumber()-1),false,newRound,game.getCurrentQuestionNumber(),nextPlayerForChoosingThemeAndCost.getEmail(),((AnsweringFinishedMessage) message).getRightAnswer());
+             ChooseThemeAndCostRequestMessage messageForAnswering = new ChooseThemeAndCostRequestMessage(playerConverter.convert(new ArrayList<Player>(game.getPlayers().values())),game.getAvailableCostsAndThemes().get(game.getTourNumber()-1),true,newRound,game.getCurrentQuestionNumber(),nextPlayerForChoosingThemeAndCost.getEmail(),((AnsweringFinishedMessage) message).getRightAnswer());
              logger.debug(nextPlayerForChoosingThemeAndCost+" this user will choose theme and cost now");
              game.setPreviousAnsweredPlayer(nextPlayerForChoosingThemeAndCost);
              try {
@@ -110,6 +112,7 @@ public class AnsweringFinishedHandler implements GameMessageHandler {
              logger.debug("now game will be finished");
              Account account;
              GameStateUpdateMessage gameStateUpdateMessage = new GameStateUpdateMessage(playerConverter.convert(new ArrayList<Player>(game.getPlayers().values())),Finished.class);
+             gameStateUpdateMessage.getIntegerParams().put("rightAnswer",((AnsweringFinishedMessage) message).getRightAnswer());
              try {
                  TextMessage msgText = new TextMessage(objectMapper.writeValueAsString(gameStateUpdateMessage));
                  for (Player p : game.getPlayers().values()) {
@@ -138,24 +141,16 @@ public class AnsweringFinishedHandler implements GameMessageHandler {
              playerConnectorOrGameRemover.handle(removeGameRequest);
          }
     }
-    private Player getNextPlayerForChoosingThemeAndCost(Game game) {
-        Player result = null;
+    private Player  getNextPlayerForChoosingThemeAndCost(Game game) {
+        int number = Math.abs(secureRandom.nextInt()) %  game.getPlayers().values().size();
+        int i = 0;
         for (Player player : game.getPlayers().values()) {
-            if ((result == null) || (result.getIncrementScore() < player.getIncrementScore())) {
-                result = player;
-                logger.debug("selected player with highest rate"+player);
+            if (i == number) {
+                return player;
             }
+            ++i;
         }
-        if (result.getIncrementScore() == 0) {
-            logger.debug("selected player has no score, choosing previous");
-            result = game.getPreviousAnsweredPlayer();
-            if (game.getPlayer(result.getEmail()) == null) {
-                logger.debug("previous answered player left game choosing random...");
-                result = (Player) game.getPlayers().values().toArray()[Math.abs(new SecureRandom().nextInt()) % game.getPlayers().values().toArray().length];
-                logger.debug("new answered player is "+result);
-            }
-        }
-        logger.debug("result is "+result);
-        return result;
+        return null;
+
     }
 }

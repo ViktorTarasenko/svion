@@ -37,7 +37,7 @@ public class Game {
         for (Theme theme : Theme.values()) {
                 availableCostsAndThemes.get(0).put(theme,new ArrayList<Cost>(costsForFirstRound));
                 availableCostsAndThemes.get(1).put(theme, new ArrayList<Cost>(costsForSecondRound));
-                availableCostsAndThemes.get(2).put(theme, costsForThirdRound);
+                availableCostsAndThemes.get(2).put(theme, new ArrayList<Cost>(costsForThirdRound));
         }
         setState(WaitingForEnoughPlayers.class);
         gameThread = new GameThread(resolver,this);

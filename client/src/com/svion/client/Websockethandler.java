@@ -1,12 +1,17 @@
 package com.svion.client;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.util.Log;
+import com.codebutler.android_websockets.HybiParser;
 import com.codebutler.android_websockets.WebSocketClient;
 import omsu.svion.MessagesHandlersResolver;
 import omsu.svion.game.handler.MessageFromServerHandler;
+import omsu.svion.game.handler.impl.GameFinishedTooLittleUsersHandler;
+import omsu.svion.game.states.WaitingForEnoughPlayers;
+import omsu.svion.messages.GameFinishedTooLittleUsers;
 import omsu.svion.messages.KeepAliveMessage;
 import omsu.svion.messages.MessageFromServer;
 import org.apache.http.message.BasicNameValuePair;
@@ -22,6 +27,7 @@ import java.util.List;
  */
 public class Websockethandler {
     private static WebSocketClient webSocketClient;
+    private static GameFinishedTooLittleUsersHandler gameFinishedTooLittleUsersHandler = new GameFinishedTooLittleUsersHandler();
     private static KeepAliveSender keepAliveSender;
     public static void openWebosket(String url) {
         List<BasicNameValuePair> extraHeaders = Arrays.asList(
@@ -48,6 +54,10 @@ public class Websockethandler {
                         if (MessageFromServer.class.isAssignableFrom(messageClass)) {
                             Log.d("lol 1/1","assignable");
                             MessageFromServer msg = objectMapper.readValue(message,(Class<? extends MessageFromServer>)messageClass);
+                            if (msg instanceof  GameFinishedTooLittleUsers) {
+                                Websockethandler.gameFinishedTooLittleUsersHandler.handle(msg);
+                                return;
+                            }
                             Log.d("lol 2 message class",msg.getClass().getCanonicalName());
                             MessageFromServerHandler[] handlers = MessagesHandlersResolver.getHandlers().get(msg.getClass());
                             if (handlers == null) {
@@ -78,13 +88,56 @@ public class Websockethandler {
 
             @Override
             public void onDisconnect(int code, String reason) {
+                keepAliveSender.cancel(true);
+                Log.d("websocket closed code ", code + "");
+                if (code == 744) {
+                    return;
+                }
+                synchronized (this) {
+                    if (webSocketClient == null)
+                        return;
+                    closeWebsocket();
+                    Intent intent = new Intent(MyActivity.main, ConnectionLostActivity.class);
+                    MyActivity.main.startActivity(intent);
+                    if (SearchGame.main != null) {
+                        SearchGame.main.finish();
+                    }
+                    if (WaitingForEnoughPlayersActivity.main != null) {
+                        WaitingForEnoughPlayersActivity.main.finish();
+                    }
+                    if (GameActivity.main != null) {
+                        GameActivity.main.finish();
+                    }
+                    if (QuestionActivity.main != null) {
+                        QuestionActivity.main.finish();
+                    }
+                }
 
             }
 
             @Override
             public void onError(Exception error) {
-
+                synchronized (this) {
+                    if (webSocketClient == null)
+                        return;
+                    closeWebsocket();
+                    Intent intent = new Intent(MyActivity.main, ConnectionLostActivity.class);
+                    MyActivity.main.startActivity(intent);
+                    if (SearchGame.main != null) {
+                        SearchGame.main.finish();
+                    }
+                    if (WaitingForEnoughPlayersActivity.main != null) {
+                        WaitingForEnoughPlayersActivity.main.finish();
+                    }
+                    if (GameActivity.main != null) {
+                        GameActivity.main.finish();
+                    }
+                    if (QuestionActivity.main != null) {
+                        QuestionActivity.main.finish();
+                    }
+                }
             }
+
 
         }, extraHeaders);
 
